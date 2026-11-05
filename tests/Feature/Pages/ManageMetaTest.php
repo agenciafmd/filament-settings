@@ -27,7 +27,7 @@ it('saves the Meta Pixel id', function (): void {
         ->call('save')
         ->assertHasNoFormErrors();
 
-    expect(app(MetaSettings::class)->refresh()->pixel_id)->toBe('123456789012345');
+    expect(resolve(MetaSettings::class)->refresh()->pixel_id)->toBe('123456789012345');
 });
 
 it('rejects a pixel id with letters', function (): void {
@@ -36,11 +36,11 @@ it('rejects a pixel id with letters', function (): void {
         ->call('save')
         ->assertHasFormErrors(['pixel_id' => 'regex']);
 
-    expect(app(MetaSettings::class)->refresh()->pixel_id)->toBeNull();
+    expect(resolve(MetaSettings::class)->refresh()->pixel_id)->toBeNull();
 });
 
 it('clears the pixel id when the field is emptied', function (): void {
-    $settings = app(MetaSettings::class);
+    $settings = resolve(MetaSettings::class);
     $settings->pixel_id = '123456789012345';
     $settings->save();
 

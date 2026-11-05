@@ -52,7 +52,7 @@ it('lists the cluster with the configured name, group and order', function (): v
 });
 
 it('shows the cluster outside a group when the group is not configured', function (): void {
-    config()->set('filament-settings.navigation_group', null);
+    config()->set('filament-settings.navigation_group');
 
     expect(SettingsCluster::getNavigationGroup())->toBeNull();
 });

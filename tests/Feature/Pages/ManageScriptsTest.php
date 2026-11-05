@@ -30,7 +30,7 @@ it('saves the header and footer scripts exactly as typed', function (): void {
         ->call('save')
         ->assertHasNoFormErrors();
 
-    $settings = app(ScriptsSettings::class)->refresh();
+    $settings = resolve(ScriptsSettings::class)->refresh();
 
     expect([$settings->header, $settings->footer])->toBe([$header, $footer]);
 });

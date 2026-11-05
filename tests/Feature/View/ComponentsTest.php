@@ -15,11 +15,11 @@ pest()->extend(TestCase::class)->use(RefreshDatabase::class);
 it('renders nothing while the settings are empty', function (string $component): void {
     $view = $this->blade("<x-filament-settings::{$component} />");
 
-    expect(mb_trim((string) $view))->toBe('');
+    expect(mb_trim((string) $view))->toBeEmpty();
 })->with(['gtm-head', 'gtm-body', 'google-analytics', 'site-verification', 'meta-pixel', 'header-scripts', 'footer-scripts']);
 
 it('loads the tag manager container with the saved id', function (): void {
-    $settings = app(GoogleSettings::class);
+    $settings = resolve(GoogleSettings::class);
     $settings->tag_manager_id = 'GTM-AB12CD3';
     $settings->save();
 
@@ -30,7 +30,7 @@ it('loads the tag manager container with the saved id', function (): void {
 });
 
 it('loads the gtag with the saved analytics id', function (): void {
-    $settings = app(GoogleSettings::class);
+    $settings = resolve(GoogleSettings::class);
     $settings->analytics_id = 'G-AB12CD34EF';
     $settings->save();
 
@@ -40,7 +40,7 @@ it('loads the gtag with the saved analytics id', function (): void {
 });
 
 it('prints the google site verification meta tag with the saved token', function (): void {
-    $settings = app(GoogleSettings::class);
+    $settings = resolve(GoogleSettings::class);
     $settings->site_verification = 'AbCd-Ef12_34';
     $settings->save();
 
@@ -49,7 +49,7 @@ it('prints the google site verification meta tag with the saved token', function
 });
 
 it('loads the meta pixel with the saved id', function (): void {
-    $settings = app(MetaSettings::class);
+    $settings = resolve(MetaSettings::class);
     $settings->pixel_id = '123456789012345';
     $settings->save();
 
@@ -59,7 +59,7 @@ it('loads the meta pixel with the saved id', function (): void {
 });
 
 it('prints each saved script only in its own place and without escaping', function (): void {
-    $settings = app(ScriptsSettings::class);
+    $settings = resolve(ScriptsSettings::class);
     $settings->header = '<script>console.log("header");</script>';
     $settings->footer = '<script>console.log("footer");</script>';
     $settings->save();

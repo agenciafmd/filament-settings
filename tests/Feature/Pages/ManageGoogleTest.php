@@ -31,7 +31,7 @@ it('saves the Google Analytics, Google Tag Manager and Search Console values', f
         ->call('save')
         ->assertHasNoFormErrors();
 
-    $settings = app(GoogleSettings::class)->refresh();
+    $settings = resolve(GoogleSettings::class)->refresh();
 
     expect([$settings->analytics_id, $settings->tag_manager_id, $settings->site_verification])
         ->toBe(['G-AB12CD34EF', 'GTM-AB12CD3', 'AbCd-Ef12_34']);
@@ -43,7 +43,7 @@ it('rejects an id in another format', function (string $field, string $id): void
         ->call('save')
         ->assertHasFormErrors([$field => 'regex']);
 
-    expect(app(GoogleSettings::class)->refresh()->{$field})->toBeNull();
+    expect(resolve(GoogleSettings::class)->refresh()->{$field})->toBeNull();
 })->with([
     'universal analytics' => ['analytics_id', 'UA-12345-1'],
     'tag manager without prefix' => ['tag_manager_id', 'AB12CD3'],
@@ -51,7 +51,7 @@ it('rejects an id in another format', function (string $field, string $id): void
 ]);
 
 it('clears an id when the field is emptied', function (string $field, string $id): void {
-    $settings = app(GoogleSettings::class);
+    $settings = resolve(GoogleSettings::class);
     $settings->{$field} = $id;
     $settings->save();
 
