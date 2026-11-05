@@ -1,4 +1,8 @@
-@php($scripts = app(\Agenciafmd\Settings\Settings\ScriptsSettings::class)->footer)
+{{--
+    Um valor que não descriptografa (adulterado direto no banco ou gravado com outra APP_KEY)
+    é reportado e não imprime nada, sem derrubar a página.
+--}}
+@php($scripts = rescue(static fn (): ?string => app(\Agenciafmd\Settings\Settings\ScriptsSettings::class)->footer))
 
 @if (filled($scripts))
     {!! $scripts !!}

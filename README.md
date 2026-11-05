@@ -108,6 +108,16 @@ use Agenciafmd\Settings\Settings\GoogleSettings;
 app(GoogleSettings::class)->tag_manager_id;
 ```
 
+### Criptografia dos scripts
+
+O `header` e o `footer` da `ScriptsSettings` são gravados criptografados com a `APP_KEY` (`#[ShouldBeEncrypted]`). Como a criptografia do Laravel é autenticada, quem consegue escrever no banco, mas não tem a chave, não consegue gravar um script que chegue ao site. Se o valor não descriptografar, o componente não imprime nada e reporta a `DecryptException`, sem derrubar a página.
+
+- Não protege contra quem tem a `APP_KEY` nem contra quem cria um admin no banco e cadastra o script pelo admix: é uma camada a mais, não a única.
+- Um dump restaurado em um ambiente com outra `APP_KEY` perde os scripts no site, e a página Scripts do admix dá erro até os valores serem gravados de novo.
+- Ao trocar a `APP_KEY`, coloque a chave antiga em `APP_PREVIOUS_KEYS` para continuar lendo os valores.
+- Os IDs (Google e Meta) não são criptografados: eles já aparecem no HTML público.
+- Para uma nova propriedade sensível, use `#[ShouldBeEncrypted]` na classe e `$this->migrator->addEncrypted('grupo.propriedade')` na migration (ou `encrypt()` para uma que já existe).
+
 ### Cache
 
 - Cada página do site lê as settings do banco. Para guardar em cache, use `SETTINGS_CACHE_ENABLED=true` (config do

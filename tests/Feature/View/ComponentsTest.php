@@ -7,7 +7,10 @@ namespace Agenciafmd\Settings\Tests\Feature\View;
 use Agenciafmd\Settings\Settings\GoogleSettings;
 use Agenciafmd\Settings\Settings\MetaSettings;
 use Agenciafmd\Settings\Settings\ScriptsSettings;
+use Illuminate\Contracts\Encryption\DecryptException;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Exceptions;
 use Tests\TestCase;
 
 pest()->extend(TestCase::class)->use(RefreshDatabase::class);
@@ -71,3 +74,20 @@ it('prints each saved script only in its own place and without escaping', functi
         ->assertSee('<script>console.log("footer");</script>', false)
         ->assertDontSee('header');
 });
+
+it('does not print a script written straight into the database', function (string $component, string $name): void {
+    Exceptions::fake();
+
+    DB::table('settings')
+        ->where('group', 'scripts')
+        ->where('name', $name)
+        ->update(['payload' => json_encode('<script>console.log("injected");</script>')]);
+
+    $view = $this->blade("<x-filament-settings::{$component} />");
+
+    expect(mb_trim((string) $view))->toBe('');
+    Exceptions::assertReported(DecryptException::class);
+})->with([
+    'header' => ['header-scripts', 'header'],
+    'footer' => ['footer-scripts', 'footer'],
+]);
