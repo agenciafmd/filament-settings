@@ -1,0 +1,30 @@
+{
+    "name": "agenciafmd/filament-settings",
+    "description": "Filament - Settings",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Irineu Junior",
+            "email": "irineu@fmd.ag",
+            "homepage": "https://fmd.ag/",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": "^8.4",
+        "agenciafmd/filament-admix": "v1.x-dev|dev-master",
+        "filament/spatie-laravel-settings-plugin": "^5.11"
+    },
+    "autoload": {
+        "psr-4": {
+            "Agenciafmd\\Settings\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Agenciafmd\\Settings\\Providers\\SettingsServiceProvider"
+            ]
+        }
+    }
+}
