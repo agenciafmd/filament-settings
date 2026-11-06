@@ -11,8 +11,8 @@
         }
     ],
     "require": {
-        "php": "^8.4",
-        "agenciafmd/filament-admix": "v1.x-dev|dev-master",
+        "php": "^8.5",
+        "agenciafmd/filament-admix": "v2.x-dev|dev-master",
         "filament/spatie-laravel-settings-plugin": "^5.11"
     },
     "autoload": {
