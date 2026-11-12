@@ -19,12 +19,16 @@ final class ManageMeta extends SettingsPage
 {
     use InteractsWithSettingsPage;
 
+    #[Override]
     protected static string $settings = MetaSettings::class;
 
+    #[Override]
     protected static ?string $cluster = SettingsCluster::class;
 
+    #[Override]
     protected static ?string $slug = 'meta';
 
+    #[Override]
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedMegaphone;
 
     #[Override]

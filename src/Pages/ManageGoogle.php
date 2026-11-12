@@ -19,12 +19,16 @@ final class ManageGoogle extends SettingsPage
 {
     use InteractsWithSettingsPage;
 
+    #[Override]
     protected static string $settings = GoogleSettings::class;
 
+    #[Override]
     protected static ?string $cluster = SettingsCluster::class;
 
+    #[Override]
     protected static ?string $slug = 'google';
 
+    #[Override]
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedChartBar;
 
     #[Override]

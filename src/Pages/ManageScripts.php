@@ -20,12 +20,16 @@ final class ManageScripts extends SettingsPage
 {
     use InteractsWithSettingsPage;
 
+    #[Override]
     protected static string $settings = ScriptsSettings::class;
 
+    #[Override]
     protected static ?string $cluster = SettingsCluster::class;
 
+    #[Override]
     protected static ?string $slug = 'scripts';
 
+    #[Override]
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedCodeBracket;
 
     #[Override]

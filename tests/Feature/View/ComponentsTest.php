@@ -85,7 +85,7 @@ it('does not print a script written straight into the database', function (strin
 
     $view = $this->blade("<x-filament-settings::{$component} />");
 
-    expect(mb_trim((string) $view))->toBe('');
+    expect(mb_trim((string) $view))->toBeEmpty();
     Exceptions::assertReported(DecryptException::class);
 })->with([
     'header' => ['header-scripts', 'header'],

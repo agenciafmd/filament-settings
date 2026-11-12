@@ -14,8 +14,10 @@ use Override;
  */
 final class SettingsCluster extends Cluster
 {
+    #[Override]
     protected static ?string $slug = 'settings';
 
+    #[Override]
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedCog6Tooth;
 
     /**
